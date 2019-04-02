@@ -12,15 +12,15 @@ import time
 
 execTime = time.time()
 
-directory = '/Volumes/FREECOM HDD/era5_tp/nc/1981/'
+directory = '/Volumes/FREECOM HDD/era5_tp/nc/1979/'
 month_list = ['01','02','03','04','05','06','07','08','09','10','11','12']
 for i in month_list:
-    fileList = createFileList(directory,'./era5_tp_1981_'+i+'*')
+    fileList = createFileList(directory,'./era5_tp_1979_'+i+'*')
     fileList.sort()
     print(fileList)
 
     array = xr.open_mfdataset(fileList)
-    outFileName = '/Volumes/FREECOM HDD/era5_tp/nc/monthly/1981/era5_tp_1981_'+i+'.nc'
+    outFileName = '/Volumes/FREECOM HDD/era5_tp/nc/monthly/1979/era5_tp_1979_'+i+'.nc'
     array.resample(time='1M').sum().to_netcdf(outFileName, mode='w', compute=True)
 
 print("The script took {0} second !".format(time.time() - execTime))

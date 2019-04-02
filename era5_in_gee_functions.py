@@ -52,7 +52,7 @@ def ncToTiff_hourly(file, parameter, noOfBands, epsgCode,year):
     if(parameter=='tp'):
         fileName = './tiff/'+year+'/'+file[10:28]+'.tif'
     else:
-        fileName = './tiff/'+year+'/'+file[10:29]+'.tif'            
+        fileName = './tiff/'+year+'/'+file[10:29]+'.tif'           
     print(fileName)
     times_ls = getEpochTimes(ncFile, noOfBands)
     scale_factor = getScaleFactor(ncFile, parameter)
@@ -173,10 +173,23 @@ def createManifest_monthly(eeCollectionName, assetName, parameter, bandIndex, st
     manifest['properties']['year']=year
     manifest['properties']['month']=month
     return manifest
+
+def updateManifest(directory,eeCollectionName, assetName, startTime, endTime, gs_bucket1, gs_bucket2, uris1, uris2, year,month):
+    with open(directory+'manifest_structure.json','r') as f:
+        jsonFile = json.load(f)
+
+    jsonFile['name']=eeCollectionName+assetName
+    jsonFile['tilesets'][0]['sources'][0]['uris']=gs_bucket1+uris1
+    jsonFile['tilesets'][1]['sources'][0]['uris']=gs_bucket2+uris2
+    jsonFile['start_time']['seconds']=startTime
+    jsonFile['end_time']['seconds']=endTime
+    jsonFile['properties']['year']=year
+    jsonFile['properties']['month']=month
+    return jsonFile
     
 def manifestToJSON(manifestDict, path,outFile):
     with open(path+outFile+'.json','w') as fp:
-        json.dump(manifestDict,fp)
+        json.dump(manifestDict,fp,indent=4)
 
 def createFileList(directory,file_pattern):
     os.chdir(directory)
