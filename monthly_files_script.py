@@ -7,7 +7,7 @@ Created on Mon Feb 25 15:46:02 2019
 """
 
 import xarray as xr
-from era5_in_gee_functions import createFileList, manifestToJSON, upload_blob, ncToTiff, getEpochTimes_monthly, updateManifest
+from era5_in_gee_functions import createFileList, manifestToJSON, upload_blob, ncToTiff, getEpochTimes_monthly, updateManifest_monthly
 import time
 import os
 import re
@@ -16,7 +16,7 @@ from google.cloud import storage
 execTime = time.time()
 directory1 = '/Volumes/jules_eh/era5_t2m/'
 directory2 = '/Volumes/FREECOM HDD/era5_tp/'
-yearList=['1996','1997','1998','1999','2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018']
+yearList=['2007']
 bucket_t2m = 'era5_t2m_monthly'
 bucket_tp = 'era5_tp_monthly'
 param1 = 't2m'
@@ -93,7 +93,7 @@ for year in yearList:
         print(assetName)
     
     
-        manifest = updateManifest(directory1, eeCollectionName="projects/earthengine-legacy/assets/projects/ecmwf/era5_monthly/",
+        manifest = updateManifest_monthly(directory1, eeCollectionName="projects/earthengine-legacy/assets/projects/ecmwf/era5_monthly/",
                               assetName=assetName,
                               startTime=int(ls_epochtimes[0]),
                               endTime=int(ls_epochtimes[1]),

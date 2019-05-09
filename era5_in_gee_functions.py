@@ -174,8 +174,8 @@ def createManifest_monthly(eeCollectionName, assetName, parameter, bandIndex, st
     manifest['properties']['month']=month
     return manifest
 
-def updateManifest(directory,eeCollectionName, assetName, startTime, endTime, gs_bucket1, gs_bucket2, uris1, uris2, year,month):
-    with open(directory+'manifest_structure.json','r') as f:
+def updateManifest_monthly(directory,eeCollectionName, assetName, startTime, endTime, gs_bucket1, gs_bucket2, uris1, uris2, year,month):
+    with open(directory+'manifest_structure_monthly.json','r') as f:
         jsonFile = json.load(f)
 
     jsonFile['name']=eeCollectionName+assetName
@@ -185,6 +185,20 @@ def updateManifest(directory,eeCollectionName, assetName, startTime, endTime, gs
     jsonFile['end_time']['seconds']=endTime
     jsonFile['properties']['year']=year
     jsonFile['properties']['month']=month
+    return jsonFile
+
+def updateManifest_daily(directory,eeCollectionName, assetName, startTime, endTime, gs_bucket1, gs_bucket2, uris1, uris2, year,month, day):
+    with open(directory+'manifest_structure_daily.json','r') as f:
+        jsonFile = json.load(f)
+
+    jsonFile['name']=eeCollectionName+assetName
+    jsonFile['tilesets'][0]['sources'][0]['uris']=gs_bucket1+uris1
+    jsonFile['tilesets'][1]['sources'][0]['uris']=gs_bucket2+uris2
+    jsonFile['start_time']['seconds']=startTime
+    jsonFile['end_time']['seconds']=endTime
+    jsonFile['properties']['year']=year
+    jsonFile['properties']['month']=month
+    jsonFile['properties']['day']=day   
     return jsonFile
     
 def manifestToJSON(manifestDict, path,outFile):
