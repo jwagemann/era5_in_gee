@@ -1,0 +1,117 @@
+{
+    "name": "projects/earthengine-legacy/assets/projects/ecmwf/era5_hourly/19790101T00",
+    "tilesets": [{
+            "id": "era5_2m_mean_temperature",
+            "sources": [{
+                "uris": "gs://era5_t2m/era5_t2m_1979_01_01_hourly_mean.tif"
+            }]
+        },
+        {
+            "id": "era5_2m_minimum_temperature",
+            "sources": [{
+                "uris": "gs://era5_mn2t/era5_minimum_2m_temperature_since_previous_post_processing_1979_01_01_hourly.tif"
+            }]
+        },
+        {
+            "id": "era5_2m_maximum_temperature",
+            "sources": [{
+                "uris": "gs://era5_mx2t/era5_maximum_2m_temperature_since_previous_post_processing_1979_01_01_hourly.tif"
+            }]
+        },
+        {
+            "id": "era5_2m_dewpoint_temperature",
+            "sources": [{
+                "uris": "gs://era5_mn2t/era5_2m_dewpoint_temperature_1979_01_01_hourly.tif"
+            }]
+        },
+        {
+            "id": "era5_total_precipitation",
+            "sources": [{
+                "uris": "gs://era5_tp/era5_tp_1979_01_01_hourly.tif"
+            }]
+        },
+        {
+            "id": "era5_surface_pressure",
+            "sources": [{
+                "uris": "gs://era5_sp/era5_surface_pressure_1979_01_01_hourly.tif"
+            }]
+        },
+        {
+            "id": "era5_mean_sea_level_pressure",
+            "sources": [{
+                "uris": "gs://era5_mslp/era5_mean_sea_level_pressure_1979_01_01_hourly.tif"
+            }]
+        },
+        {
+            "id": "era5_10m_u_component_of_wind",
+            "sources": [{
+                "uris": "gs://era5_u10/era5_10m_u_component_of_wind_1979_01_01_hourly.tif"
+            }]
+        },
+        {
+            "id": "era5_10m_v_component_of_wind",
+            "sources": [{
+                "uris": "gs://era5_v10/era5_10m_v_component_of_wind_1979_01_01_hourly.tif"
+            }]
+        }
+    ],
+    "bands": [{
+            "id": "mean_2m_air_temperature",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_2m_mean_temperature"
+        },
+        {
+            "id": "minimum_2m_air_temperature",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_2m_minimum_temperature"
+        },
+        {
+            "id": "maximum_2m_air_temperature",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_2m_maximum_temperature"
+        },
+        {
+            "id": "dewpoint_2m_temperature",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_2m_dewpoint_temperature"
+        },
+        {
+            "id": "total_precipitation",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_total_precipitation"
+        },
+        {
+            "id": "surface_pressure",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_surface_pressure"
+        },
+        {
+            "id": "mean_sea_level_pressure",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_mean_sea_level_pressure"
+        },
+        {
+            "id": "u_component_of_wind_10m",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_10m_u_component_of_wind"
+        },
+        {
+            "id": "v_component_of_wind_10m",
+            "tileset_band_index": 0,
+            "tileset_id": "era5_10m_v_component_of_wind"
+        }
+    ],
+    "start_time": {
+        "seconds": 283996800
+    },
+    "end_time": {
+        "seconds": 286675200
+    },
+    "properties": {
+        "year": 1979,
+        "month": 1,
+        "day": 1,
+        "hour": 0
+    }
+}
+
