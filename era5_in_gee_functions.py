@@ -766,6 +766,25 @@ def uploadToGCP(directory,year,time_step,parameter,bucket):
 
         upload_blob(bucket,file,tmp[4])
 
+################################################################################
+# Function to call the command from the earthengine Python API to ingest files
+# stored on GCP into Earth Engine with the help of manifest upload
+################################################################################
+
+
+def ee_ingest(manifest_list):
+    ''' Function that calls the earthengine Python API command to ingest files stored on GCP into Earth Engine
+    based on manifest upload.
+    
+    Parameters:
+    mainfest_list(list): path to manifests to upload
+    '''
+    for i in manifest_list:
+        print(i)
+        cmd = 'earthengine --use_cloud_api upload image --force --manifest ' + i
+        print(cmd)
+        os.system(cmd)
+
 
 
 
