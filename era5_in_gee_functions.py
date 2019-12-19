@@ -86,7 +86,6 @@ def ncToTiff_hourly(file, noOfBands, year, epsgCode, outfile, parameter):
     else:
         parameter='tp'
     ncFile = gdal.Open(file)
-    print('arameter', parameter)
     outTiff = initTiff(outfile,ncFile,noOfBands)
     scale_factor = getScaleFactor(ncFile, parameter)
     offset = getOffset(ncFile, parameter)

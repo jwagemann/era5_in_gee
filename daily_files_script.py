@@ -25,7 +25,7 @@ directory4 = '/Volumes/LaCie/'
 #yearList = ['2016','2017','2018']
 #yearList = ['2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018', '2019']
 #yearList = ['1990','1991','1992','1993','1994','1995','1996','1997','1998','1999','2000','2001','2002','2003','2004','2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019']
-yearList = ['1986','1987']
+yearList = ['1988','1989','1990']
 #yearList = ['1979']
 
 #yearList = ['2014','2015','2016','2017','2018']
@@ -120,19 +120,19 @@ for year in yearList:
 #     createManifestCombined(fileList, year,bucket_list, directory_manifest,directory_outfile)
 # #
 
-    upload_blob('gs://earthengine-ecmwf','/Volumes/G-DRIVE with Thunderbolt/era5_t2m/tiff/daily/1979/era5_t2m_1979_01_09_daily_mean.tif','test')
+#    upload_blob('gs://earthengine-ecmwf','/Volumes/G-DRIVE with Thunderbolt/era5_t2m/tiff/daily/1979/era5_t2m_1979_01_09_daily_mean.tif','test')
     # #Ingest to EE
     # print("5th step - Ingest to EE")
 
-    # manifest_list = createFileList(directory_outfile+year+'/', '*.json')
-    # print(year)
-    # print(len(manifest_list))
-    # if(len(manifest_list)<365 and year!='1979'):
-    #     break
-    # else:
-    #     for i in manifest_list:
-    #         cmd = 'earthengine --use_cloud_api upload image --force --manifest ' + i
-    #         os.system(cmd)
+    manifest_list = createFileList(directory_outfile+year+'/', '*.json')
+    print(year)
+    print(len(manifest_list))
+    if(len(manifest_list)<365 and year!='1979'):
+        break
+    else:
+        for i in manifest_list:
+            cmd = 'earthengine --use_cloud_api upload image --force --manifest ' + i
+            os.system(cmd)
     
     
 #    Delete files from GCP
