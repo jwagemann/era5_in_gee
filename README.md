@@ -37,10 +37,8 @@ TODO
 ## References
 - [ERA5 reanalysis data in the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview)
 - [Google Earth Engine](https://earthengine.google.com/)
-<br>
 - [ERA5 DAILY | GEE Public Data Catalog](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_DAILY)
 - [ERA5 MONTHLY | GEE Pubic Data Catalog](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_MONTHLY)
-<br>
 - [ERA5 in GEE | Slides from the EarthEngineVirtualMeetup in Dec 2019](https://speakerdeck.com/jwagemann/era5-climate-reanalysis-in-earth-engine)
 
 
