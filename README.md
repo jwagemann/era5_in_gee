@@ -25,12 +25,16 @@ The workflow consists of six major steps:
 
 ## Repository content
 * ERA5 in GEE functions
-  * [[Python script]](./era5_in_gee_functions.ipynb) 
-  * [[Jupyter notebooks]](./era5_in_gee_functions.ipynb)
+  * [Python script](./era5_in_gee_functions.ipynb) 
+  * [Jupyter notebook](./era5_in_gee_functions.ipynb)
 * Example workflows for
-  * [[Hourly]](./)
-  * [[Daily]]
-  * [[Monthly]]
+  * [Hourly assets](./hourly_files_script.py)
+  * [Daily assets](./daily_files_script.py)
+  * [Monthly assets](./monthly_files_script.py)
+* Example manifest files for
+  * [Hourly assets](./manifest_structure_hourly.json)
+  * [Daily assets](./manifest_structure_daily.json)
+  * [Monthly assets](./manifest_structure_monthly.json)
 
 ## Python packages required
 - [cdsapi](https://pypi.org/project/cdsapi/)
