@@ -39,6 +39,8 @@ The workflow consists of six major steps:
    * [Retrieve ERA5 reanalysis from the CDS with `cdsapi`](./cds_data_retrieve.py)
    * [Delete blobs from GCP buckets](./delete_from_gcp.py)
 
+<br>
+
 ## Python packages required
 - [cdsapi](https://pypi.org/project/cdsapi/)
 - [EarthEngine Python API](https://developers.google.com/earth-engine/python_install-conda.html)
@@ -46,6 +48,7 @@ The workflow consists of six major steps:
 - [gdal](https://pypi.org/project/GDAL/)
 - [xarray](http://xarray.pydata.org/en/stable/)
 
+<br>
 
 ## References
 - [ERA5 reanalysis data in the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview)
