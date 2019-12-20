@@ -3,7 +3,7 @@
 
 This repository contains a set of functions and example scripts to ingest Copernicus ERA5 reanalysis data into Google Earth Engine based on [manifest uploads](https://developers.google.com/earth-engine/image_manifest).
 
-The functions have been developed during the process of making a subset of the ERA5 reanalysis data available in Google Earth Engine. 
+The functions were developed during the process of making a subset of the ERA5 reanalysis data available in Google Earth Engine. 
 
 <br>
 
@@ -27,11 +27,11 @@ The workflow consists of six major steps:
 * ERA5 in GEE functions
   * [Python script](./era5_in_gee_functions.ipynb) 
   * [Jupyter notebook](./era5_in_gee_functions.ipynb)
-* Example workflows for
+* Example workflows
   * [Hourly assets](./hourly_files_script.py)
   * [Daily assets](./daily_files_script.py)
   * [Monthly assets](./monthly_files_script.py)
-* Example manifest files for
+* Example manifest files
   * [Hourly assets](./manifest_structure_hourly.json)
   * [Daily assets](./manifest_structure_daily.json)
   * [Monthly assets](./manifest_structure_monthly.json)
@@ -54,7 +54,7 @@ The workflow consists of six major steps:
 - [ERA5 reanalysis data in the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview)
 - [Google Earth Engine](https://earthengine.google.com/)
 - [ERA5 DAILY | GEE Public Data Catalog](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_DAILY)
-- [ERA5 MONTHLY | GEE Pubic Data Catalog](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_MONTHLY)
+- [ERA5 MONTHLY | GEE Public Data Catalog](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_MONTHLY)
 - [ERA5 in GEE | Slides from the EarthEngineVirtualMeetup in Dec 2019](https://speakerdeck.com/jwagemann/era5-climate-reanalysis-in-earth-engine)
 
 <br>
