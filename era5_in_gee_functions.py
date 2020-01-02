@@ -226,7 +226,7 @@ def ncToTiff(file, noOfBands, epsgCode,outfile):
     outTiff = initTiff(outfile,ncFile,noOfBands)
     
     fileLayer = ncFile.GetRasterBand(1).ReadAsArray().astype('float')
-    fileLayer[fileLayer<0] = 0.0
+  #  fileLayer[fileLayer<0] = 0.0
     outBand = outTiff.GetRasterBand(1)
     outBand.WriteArray(fileLayer)
     # Set spatial reference to the GeoTiff object
@@ -285,10 +285,10 @@ def convertFilesToTiff(directory, time_step, parameter, year, epsg):
     year(str): additional to the directory path to differentiate the year
     epsg(str): epsg code of the resulting GeoTiff file
     '''
-    fileList = createFileList(directory, './era5_'+parameter+'/nc/'+time_step+'/'+year+'/era5_surface_pressure_1985_06_12*.nc')
+    fileList = createFileList(directory, './era5_'+parameter+'/nc/'+time_step+'/'+year+'/*.nc')
     # Test if a file of one year is missing
-    if(len(fileList)<365):
-        return
+ #   if(len(fileList)<365):
+ #       return
 
     fileList.sort()
     for file in fileList:
@@ -299,9 +299,9 @@ def convertFilesToTiff(directory, time_step, parameter, year, epsg):
         print(outfile)
         if(time_step!='hourly'):
             # if daily or monthly files are converted, use func(ncToTiff) else func(ncToTiff_hourly)
-            ncToTiff(file,1,year,epsg, outfile)
+            ncToTiff(file,1,epsg, outfile)
         else:
-            ncToTiff_hourly(file,24,year, epsg,outfile,parameter)
+            ncToTiff_hourly(file,24, epsg,outfile,parameter)
 
  
 ################################################################################
