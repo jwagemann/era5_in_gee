@@ -54,12 +54,12 @@ The workflow consists of six major steps:
 
 ## Naming convention and folder structure
 The scripts base on the following `naming convention` and `folder_structure`:
-### naming convention
+* ### naming convention
 Data is downloaded from the Climate Data Store with the following syntax: 
 * `era5_` + `name_of_variable_` + `year_` + `month_` + `day` + `.nc`
   * Example for a  file of 2m dewpoint temperature from 1 January 1980: `era5_2m_dewpoint_temperature_1980_01_01.nc`
 
-### folder structure: 
+* ### folder structure: 
 (*example for 2m air temperature*)
 - `era5_t2m`
   - `nc`
