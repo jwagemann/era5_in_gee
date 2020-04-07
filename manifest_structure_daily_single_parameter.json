@@ -1,0 +1,27 @@
+{
+	"name": "projects/earthengine-legacy/assets/projects/ecmwf/era5_daily/test",
+	"tilesets": [{
+			"id": "era5_2m_mean_temperature",
+			"sources": [{
+				"uris": "gs://era5_t2m_daily/eera5_t2m_1979_01_01_daily_mean.tif"
+			}]
+		}
+	],
+	"bands": [{
+			"id": "mean_2m_air_temperature",
+			"tileset_band_index": 0,
+			"tileset_id": "era5_2m_mean_temperature"
+		}
+	],
+	"start_time": {
+		"seconds": 283996800
+	},
+	"end_time": {
+		"seconds": 286675200
+	},
+	"properties": {
+		"year": 1979,
+		"month": 1,
+		"day":1
+	}
+}
