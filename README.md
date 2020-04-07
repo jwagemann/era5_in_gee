@@ -56,6 +56,7 @@ The workflow consists of six major steps:
 - [ERA5 DAILY | GEE Public Data Catalog](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_DAILY)
 - [ERA5 MONTHLY | GEE Public Data Catalog](https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_MONTHLY)
 - [ERA5 in GEE | Slides from the EarthEngineVirtualMeetup in Dec 2019](https://speakerdeck.com/jwagemann/era5-climate-reanalysis-in-earth-engine)
+- [ERA5 reanalysis data available in Earth Engine - ECMWF Newsletter Number 162 Winter 2020](https://www.ecmwf.int/en/newsletter/162/news/era5-reanalysis-data-available-earth-engine)
 
 <br>
 
