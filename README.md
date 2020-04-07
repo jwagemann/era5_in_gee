@@ -30,11 +30,13 @@ The workflow consists of six major steps:
 * Example workflows
   * [Hourly assets](./hourly_files_script.py)
   * [Daily assets](./daily_files_script.py)
+  * [Daily single asset](./daily_files_script_single_parameter.py)
   * [Monthly assets](./monthly_files_script.py)
 * Example manifest files
-  * [Hourly assets](./manifest_structure_hourly.json)
-  * [Daily assets](./manifest_structure_daily.json)
-  * [Monthly assets](./manifest_structure_monthly.json)
+  * [Hourly multiple assets](./manifest_structure_hourly.json)
+  * [Daily multiple assets](./manifest_structure_daily.json)
+  * [Daily single asset](./manifest_structure_daily_single_parameter.json) 
+  * [Monthly multiple assets](./manifest_structure_monthly.json)
  * Example scripts for
    * [Retrieve ERA5 reanalysis from the CDS with `cdsapi`](./cds_data_retrieve.py)
    * [Delete blobs from GCP buckets](./delete_from_gcp.py)
@@ -49,6 +51,40 @@ The workflow consists of six major steps:
 - [xarray](http://xarray.pydata.org/en/stable/)
 
 <br>
+
+## Naming convention and folder structure
+The scripts base on the following `naming convention` and `folder_structure`:
+### naming convention
+Data is downloaded from the Climate Data Store with the following syntax: 
+* `era5_` + `name_of_variable_` + `year_` + `month_` + `day` + `.nc`
+  * Example for a  file of 2m dewpoint temperature from 1 January 1980: `era5_2m_dewpoint_temperature_1980_01_01.nc`
+
+### folder structure: 
+(*example for 2m air temperature*)
+- `era5_t2m`
+  - `nc`
+    - `hourly`
+      - `year` (e.g. 1979)
+    - `daily`
+      - `year` (e.g. 1979)
+    - `monthly`
+      - `year` (e.g. 1979)
+  - `tiff`
+    - `hourly`
+      - `year` (e.g. 1979)
+    - `daily`
+      - `year` (e.g. 1979)
+    - `monthly`
+      - `year` (e.g. 1979)
+- `manifests`
+  - `era5_hourly`
+      - `year` (e.g. 1979)
+  - `era5_daily`
+      - `year` (e.g. 1979)
+  - `era5_monthly`
+      - `year` (e.g. 1979)
+  - `manifest_template.json`
+
 
 ## References
 - [ERA5 reanalysis data in the Climate Data Store](https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-single-levels?tab=overview)
