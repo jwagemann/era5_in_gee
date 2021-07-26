@@ -297,7 +297,10 @@ def convertFilesToTiff(directory, time_step, parameter, year, epsg):
     # Test if a file of one year is missing
  #   if(len(fileList)<365):
  #       return
-    directory_out = directory
+    if(parameter=='tp'):
+        directory_out = '/Volumes/G-DRIVE with Thunderbolt/'
+    else:
+        directory_out = directory
     fileList.sort()
     print(fileList)
     for file in fileList:
@@ -338,7 +341,16 @@ def createDailyFiles(directory, parameter, year, aggregation):
         print(i)
         print(parameter)
         # if paramter if total precipitation, open two subsequent NetCDF files and concat the files on the time dimension
-
+        if(parameter=='tp'):
+            print(fileList[i])
+            print(fileList[i+1])
+            array_1 = xr.open_dataset(fileList[i]).isel(expver=0)
+            print(array_1)
+            array_2 = xr.open_dataset(fileList[i+1])
+            print(array_2)
+            array=xr.open_mfdataset([fileList[i],fileList[i+1]],concat_dim='time', combine='nested')
+            print(array)
+        else:
         # else, open the NetCDF file and apply automatically scale and offset factors by setting the kwarg mask_and_scale=True
         array = xr.open_dataset(fileList[i], mask_and_scale=True, decode_times=True)
         print(array)

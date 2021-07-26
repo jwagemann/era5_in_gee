@@ -1,9 +1,9 @@
 {
-	"name": "projects/earthengine-legacy/assets/users/juliawagemann1985/ic_test/test",
+	"name": "projects/earthengine-legacy/assets/projects/ecmwf/era5_daily/test",
 	"tilesets": [{
 			"id": "era5_2m_mean_temperature",
 			"sources": [{
-				"uris": "gs://era5_t2m_daily/era5_t2m_1980_01_02_daily_mean.tif"
+				"uris": "gs://era5_t2m_daily/eera5_t2m_1979_01_01_daily_mean.tif"
 			}]
 		}
 	],
