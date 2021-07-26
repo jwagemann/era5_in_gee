@@ -52,7 +52,8 @@ def createListOfLists(directory_list,aggregation,year):
     for i in directory_list:
         os.chdir(i)
         # Create a file list for each entry of the directory list
-        fileList_tmp = createFileList(i,'./tiff/'+aggregation+'/'+year+'/*')
+        fileList_tmp = createFileList(i,'./tiff/'+aggregation+'/'+year+'/*2020_07*')
+        print(fileList_tmp)
         # Sort the resulting file list
         fileList_tmp.sort()
         # Append to build up a list of lists
@@ -135,8 +136,11 @@ def initTiff(filename, file, noOfBands):
     
     Returns:
     outFile (gdal TIFF object): returns a Tiff file object that can be used to write array information with func(createTiff)
-    ''' 
+    '''
+    print(file.RasterXSize)
+    print(file.RasterYSize)
     outFile = gdal.GetDriverByName('GTiff').Create(filename, file.RasterXSize, file.RasterYSize, noOfBands, gdal.GDT_Float32)
+    print(outFile)
     geotransform = (-180.0, 0.25, 0.0, 90.0, 0.0, -0.25)
     outFile.SetGeoTransform(geotransform)
     return outFile
@@ -157,7 +161,7 @@ def createTiff(file, outfile, scale_factor, offset):
     for j in range(1, file.RasterCount+1):
         fileLayer = file.GetRasterBand(j).ReadAsArray().astype('float')
         finalArray = float(offset) + (fileLayer * float(scale_factor))
-        finalArray[finalArray<0] = 0.0
+  #      finalArray[finalArray<0] = 0.0
         outBand = outfile.GetRasterBand(j)
         outBand.WriteArray(finalArray)
     return outBand
@@ -211,7 +215,7 @@ def setSpatialReference(file,EPSGCode):
 
 def ncToTiff(file, noOfBands, epsgCode,outfile):
     ''' Function that combines various steps to convert an aggregated NetCDF file (daily or monthly) to a GeoTiff file. Scale and Offset factors do not
-    need to be applied, as those were already accounted for while the data was aggregated with xarray. See funct(createDailyFiles)
+    need to be applied, as those were already accounted for while the data was aggregated with xarray. See funct(yFiles)
     or func(createMonthlyFiles).
     
     Parameters:
@@ -226,9 +230,10 @@ def ncToTiff(file, noOfBands, epsgCode,outfile):
     outTiff = initTiff(outfile,ncFile,noOfBands)
     
     fileLayer = ncFile.GetRasterBand(1).ReadAsArray().astype('float')
-  #  fileLayer[fileLayer<0] = 0.0
+
     outBand = outTiff.GetRasterBand(1)
     outBand.WriteArray(fileLayer)
+
     # Set spatial reference to the GeoTiff object
     setSpatialReference(outTiff, epsgCode)
     # Write the GeoTiff file and close it
@@ -264,8 +269,11 @@ def ncToTiff_hourly(file, noOfBands, epsgCode, outfile, parameter):
         parameter='t2m'
     else:
         parameter='tp'
+    print(parameter)
     ncFile = gdal.Open(file)
+    print(ncFile)
     outTiff = initTiff(outfile,ncFile,noOfBands)
+    print(outTiff)
     scale_factor = getScaleFactor(ncFile, parameter)
     offset = getOffset(ncFile, parameter)
 
@@ -289,13 +297,14 @@ def convertFilesToTiff(directory, time_step, parameter, year, epsg):
     # Test if a file of one year is missing
  #   if(len(fileList)<365):
  #       return
-
+    directory_out = directory
     fileList.sort()
+    print(fileList)
     for file in fileList:
         tmp = file.split('/')
         print(tmp[5][:-3])
         # Generate name of the outfile
-        outfile = directory+'era5_'+parameter+'/tiff/'+time_step+'/'+year+'/'+str(tmp[5][:-3])+'.tif'
+        outfile = directory_out+'era5_'+parameter+'/tiff/'+time_step+'/'+year+'/'+str(tmp[5][:-3])+'.tif'
         print(outfile)
         if(time_step!='hourly'):
             # if daily or monthly files are converted, use func(ncToTiff) else func(ncToTiff_hourly)
@@ -319,25 +328,27 @@ def createDailyFiles(directory, parameter, year, aggregation):
     parameter (str): parameter to be resampled. If 'tp', aggregation will be based on two NetCDF files
     year(str): addition to the directory path
     aggregation(str): what type of aggregation shall be executed - mean, min, max, sum
-    '''    
-    fileList = createFileList(directory, './era5_'+parameter+'/nc/hourly/'+year+'/era5_'+parameter+'_'+year+'*')
+    '''
+    fileList = createFileList(directory, './era5_'+parameter+'/nc/hourly/'+year+'/era5_'+parameter+'_'+year+'*.nc')
     fileList.sort()
+    print(fileList)
+
     
-    for i in range(0,len(fileList)-1):
+    for i in range(0,len(fileList)):
+        print(i)
+        print(parameter)
         # if paramter if total precipitation, open two subsequent NetCDF files and concat the files on the time dimension
-        if(parameter=='tp'):
-            array=xr.open_mfdataset([fileList[i],fileList[i+1]],concat_dim='time', combine='nested')
-            print(array)
-        else:
+
         # else, open the NetCDF file and apply automatically scale and offset factors by setting the kwarg mask_and_scale=True
-            array = xr.open_dataset(fileList[i], mask_and_scale=True, decode_times=True)
-            print(array)
+        array = xr.open_dataset(fileList[i], mask_and_scale=True, decode_times=True)
+        print(array)
         tmp = fileList[i].split('/')
+        print(tmp)
 
         # Define the name of the aggregated NetCDF file
         outFileName = directory+'./era5_'+parameter+'/nc/daily/'+year+'/'+tmp[5][:-3]+'_daily_'+aggregation+'.nc'
         
-        print(outFileName)
+        print('outFileName',outFileName)
         
         # Offer different aggregation methods and aggregate on a daily basis
         if(aggregation=='mean'):
@@ -368,17 +379,19 @@ def createMonthlyFiles(directory, parameter, year, aggregation):
     aggregation(str): what type of aggregation shall be executed - mean, min, max, sum
     ''' 
     month_list = ['01','02','03','04','05','06','07','08','09','10','11','12']
-
+ #   month_list = ['09','10','11','12']
     for i in month_list:
-        fileList_param = createFileList(directory,'./era5_'+parameter+'/nc/'+year+'/era5_'+parameter+'_'+year+'_'+i+'*')
+        fileList_param = createFileList(directory,'./era5_'+parameter+'/nc/hourly/'+year+'/era5_'+parameter+'_'+year+'_'+i+'*')
+        print(fileList_param)
         fileList_param.sort()
 
         os.chdir(directory)
         array_param = xr.open_mfdataset(fileList_param,combine='nested', concat_dim='time')
 
         tmp = fileList_param[0].split('/')
-        outFileName_param = directory+'./era5_'+parameter+'/nc/monthly/'+year+'/'+tmp[4][:-6]+'_monthly_'+aggregation+'.nc'
-
+        print(tmp)
+        outFileName_param = directory+'./era5_'+parameter+'/nc/monthly/'+year+'/'+tmp[5][:-6]+'_monthly_'+aggregation+'.nc'
+        print(outFileName_param)
         # Account for different aggregation levels
         if(aggregation=='mean'):
             print('mean')
@@ -484,6 +497,37 @@ def updateManifest_daily(directory, eeCollectionName, assetName, startTime, endT
     jsonFile['tilesets'][6]['sources'][0]['uris']='gs://'+gs_bucket_list[6]+'/'+uris7
     jsonFile['tilesets'][7]['sources'][0]['uris']='gs://'+gs_bucket_list[7]+'/'+uris8
     jsonFile['tilesets'][8]['sources'][0]['uris']='gs://'+gs_bucket_list[8]+'/'+uris9 
+    jsonFile['start_time']['seconds']=startTime
+    jsonFile['end_time']['seconds']=endTime
+    jsonFile['properties']['year']=year
+    jsonFile['properties']['month']=month
+    jsonFile['properties']['day']=day   
+    return jsonFile
+
+def updateManifest_daily_single_variable(directory, eeCollectionName, assetName, startTime, endTime, gs_bucket, uris1, year,month, day):
+    ''' Function that opens an example manifest structure file for ERA5 daily assets and updates the dictionary items
+    accordingly.
+    
+    Parameters:
+    directory (str): Path to directory with tiff files
+    eeCollectionName(str):  Path to collection name on Earth Engine
+    assetName(str): name of resulting asset in Earth Engine
+    startTime(int): start time in epoch time
+    endTime(int): end time in epoch time
+    gs_bucket: Path to GCP bucket
+    uris1 (str): name of tiff file to be uploaded to GCP
+    year(str): add as additional asset information - year
+    month(str): add as additional asset information - month
+    day(str): add as additional asset information - year
+    
+    Returns:
+    jsonFile object
+    ''' 
+    with open(directory+'manifest_structure_daily_single_parameter.json','r') as f:
+        jsonFile = json.load(f)
+
+    jsonFile['name']=eeCollectionName+assetName
+    jsonFile['tilesets'][0]['sources'][0]['uris']='gs://'+gs_bucket+'/'+uris1
     jsonFile['start_time']['seconds']=startTime
     jsonFile['end_time']['seconds']=endTime
     jsonFile['properties']['year']=year
@@ -642,6 +686,7 @@ def createManifestCombined_daily(fileList, year,bucket_list, directory_manifest,
                                         uris6=uris_list[5],
                                         uris7=uris_list[6],
                                         uris8=uris_list[7],
+                                        uris9=uris_list[8],
                                         year=int(tmp[3]),
                                         month=int(tmp[4]),
                                         day=int(tmp[5]))
@@ -662,7 +707,7 @@ def createManifestCombined_monthly(fileList, year,bucket_list, directory_manifes
     directory_outfile(str): path where manifest files shall be stored
     ''' 
     for i in range(0,len(fileList[0])):
-
+        print(i)
         item = list(zip(*fileList))[i]
 
         tmp = re.findall('\d+', item[0])
@@ -692,6 +737,7 @@ def createManifestCombined_monthly(fileList, year,bucket_list, directory_manifes
                                         uris6=uris_list[5],
                                         uris7=uris_list[6],
                                         uris8=uris_list[7],
+                                        uris9=uris_list[8],
                                         year=int(tmp[3]),
                                         month=int(tmp[4]))
         outfile='manifest_'+assetName+'_monthly'
@@ -727,7 +773,7 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
                 destination_blob_name))
 
 
-def uploadMonthlyFilesToGCP(directory,parameter,year,bucket):
+def uploadMonthlyFilesToGCP(directory,parameter,year,bucket, folder_path):
     ''' Function that uploads monthly files to Google Cloud Platform.
     
     Parameters:
@@ -736,14 +782,15 @@ def uploadMonthlyFilesToGCP(directory,parameter,year,bucket):
     year(str): year - addition to source file name
     bucket(str): name of bucket on GCP
     ''' 
-    fileList = createFileList(directory,'./era5_'+parameter+'/tiff/monthly/'+year+'/*.tif')
+    fileList = createFileList(directory,'./era5_'+parameter+'/tiff/monthly/'+year+'/*')
     fileList.sort()
+    print(fileList)
     for file in fileList:
         tmp = file.split('/')
         print(tmp)
         destname = tmp[5]
         print(destname)
-        upload_blob(bucket,file,destname)
+        upload_blob(bucket,file,folder_path+destname)
 
 
 def uploadToGCP(directory,year,time_step,parameter,bucket):
@@ -756,15 +803,55 @@ def uploadToGCP(directory,year,time_step,parameter,bucket):
     parameter(str): parameter name - addition to source file name
     bucket(str): name of bucket on GCP
     ''' 
-    fileList = createFileList(directory, 'era5_'+parameter+'/tiff/'+time_step+'/'+year+'/*.tif')
+    fileList = createFileList(directory, 'era5_'+parameter+'/tiff/'+time_step+'/'+year+'/*_2020_07_*')
     fileList.sort()
 
     for file in fileList:
         print(file)
         tmp = file.split('/')
-        print(tmp)
-
-        upload_blob(bucket,file,tmp[4])
+        if(time_step=='hourly'):
+                if(parameter=='maximum_2m_temperature_since_previous_post_processing'):
+                    parameter_short='mx2t'
+                elif(parameter=='minimum_2m_temperature_since_previous_post_processing'):
+                    parameter_short='mn2t'
+                elif(parameter=='surface_pressure'):
+                    parameter_short='sp'
+                elif(parameter=='2m_dewpoint_temperature'):
+                    parameter_short='d2m'
+                elif(parameter=='mean_sea_level_pressure'):
+                    parameter_short='msl'
+                elif(parameter=='10m_u_component_of_wind'):
+                    parameter_short='u10'
+                elif(parameter=='10m_v_component_of_wind'):
+                    parameter_short='v10'
+                elif(parameter=='t2m'):
+                    parameter_short='t2m'
+                else:
+                    parameter_short='tp'
+                print(parameter_short)
+                upload_blob(bucket,file,'era5/era5_'+parameter_short+'/'+tmp[4])
+        else:
+                if(parameter=='maximum_2m_temperature_since_previous_post_processing'):
+                    parameter_short='mx2t'
+                elif(parameter=='minimum_2m_temperature_since_previous_post_processing'):
+                    parameter_short='mn2t'
+                elif(parameter=='surface_pressure'):
+                    parameter_short='sp'
+                elif(parameter=='2m_dewpoint_temperature'):
+                    parameter_short='d2m'
+                elif(parameter=='mean_sea_level_pressure'):
+                    parameter_short='msl'
+                elif(parameter=='10m_u_component_of_wind'):
+                    parameter_short='u10'
+                elif(parameter=='10m_v_component_of_wind'):
+                    parameter_short='v10'
+                elif(parameter=='t2m'):
+                    parameter_short='t2m'
+                else:
+                    parameter_short='tp'
+                print(parameter_short)
+                print(tmp[4])
+                upload_blob(bucket,file,'era5/daily/era5_'+parameter_short+'/'+tmp[4])
 
 ################################################################################
 # Function to call the command from the earthengine Python API to ingest files
