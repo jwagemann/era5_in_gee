@@ -1,0 +1,27 @@
+{
+	"name": "projects/earthengine-legacy/assets/users/juliawagemann1985/ic_test/test",
+	"tilesets": [{
+			"id": "era5_2m_mean_temperature",
+			"sources": [{
+				"uris": "gs://era5_t2m_daily/era5_t2m_1980_01_02_daily_mean.tif"
+			}]
+		}
+	],
+	"bands": [{
+			"id": "mean_2m_air_temperature",
+			"tileset_band_index": 0,
+			"tileset_id": "era5_2m_mean_temperature"
+		}
+	],
+	"start_time": {
+		"seconds": 283996800
+	},
+	"end_time": {
+		"seconds": 286675200
+	},
+	"properties": {
+		"year": 1979,
+		"month": 1,
+		"day":2
+	}
+}
